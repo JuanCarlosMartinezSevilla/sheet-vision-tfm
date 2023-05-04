@@ -36,23 +36,6 @@ struct ContentView : View {
     }
 }
 
-//struct LoginView : View {
-//    @ObservedObject var loginManager : LoginManager
-//    
-//    var body: some View {
-//        Button("Login") {
-//            loginManager.login()
-//        }
-//    }
-//}
-
-struct LoggedInView : View {
-    var body: some View {
-        Text("Logged in!")
-    }
-}
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
