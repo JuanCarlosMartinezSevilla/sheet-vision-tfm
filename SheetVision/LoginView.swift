@@ -12,7 +12,6 @@ struct LoginView: View {
     @ObservedObject var loginManager : LoginManager
     
     var body: some View {
-        NavigationView {
             VStack {
                 
                 Spacer()
@@ -48,6 +47,6 @@ struct LoginView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarHidden(false)
         }
-    }
+    
 }
 
