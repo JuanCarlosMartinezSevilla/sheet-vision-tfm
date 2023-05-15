@@ -7,47 +7,42 @@
 
 import SwiftUI
 
-struct MusicCollection: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-}
 
 
 struct CollectionsView: View {
     
-    let musicCollections = ["Jazz Classics", "Pop Hits", "Rock Anthems", "Country Jams", "Classical Masterpieces"]
+//    @Environment(\.managedObjectContext) var moc
+//    @FetchRequest(sortDescriptors: [
+//        SortDescriptor(\.name),
+//        SortDescriptor(\.colDescription)
+//    ]) var collection: FetchedResults<Collection>
     
-    var randomCollections: [MusicCollection] {
-        var collections = [MusicCollection]()
-        for i in 1...5 {
-            let randomIndex = Int.random(in: 0..<musicCollections.count)
-            let randomName = musicCollections[randomIndex]
-            let collection = MusicCollection(name: "\(randomName) Collection \(i)")
-            collections.append(collection)
-        }
-        return collections
-    }
+    @State private var showingAddCollectionScreen = false
     
-    @State private var selectedCollection: MusicCollection?
+    @State private var selectedCollection: Collection?
     
     var body: some View {
         
-        List(randomCollections, selection: $selectedCollection) { collection in
-            NavigationLink(collection.name) {
-                ScoresView()
-            }
-            //Navigation(collection.name, value: collection.name)
-            
-        }.toolbar{
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    Text("Add collection")
-                } label: {
-                    Label("Add collection", systemImage: "plus")
-                }
-            }
-        }
-        .navigationBarTitle("Collections")
+        //        List(randomCollections, selection: $selectedCollection) { collection in
+        //            NavigationLink(collection.name) {
+        //                ScoresView()
+        //            }
+        //            //Navigation(collection.name, value: collection.name)
+        //
+        //        }.toolbar {
+        //            ToolbarItem(placement: .navigationBarTrailing) {
+        //                Button {
+        //                    showingAddCollectionScreen.toggle()
+        //                } label: {
+        //                    Label("Add Collection", systemImage: "plus")
+        //                }
+        //            }
+        //        }.sheet(isPresented: $showingAddCollectionScreen) {
+        //            AddCollectionView()
+        //        }
+        //        .navigationBarTitle("Collections")
+        //    }
+        Text("main")
     }
 }
 

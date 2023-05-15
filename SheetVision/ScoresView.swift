@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct MusicScore: Identifiable {
     let id = UUID()
@@ -14,40 +15,34 @@ struct MusicScore: Identifiable {
 
 struct ScoresView: View {
     
-    let musicScores = ["Moon River", "My Favorite Things", "Fly Me to the Moon", "Autumn Leaves", "The Girl from Ipanema", "Take Five", "All the Things You Are", "Summertime"]
-    
-    var randomScores: [MusicScore] {
-        var scores = [MusicScore]()
-        for i in 1...5 {
-            let randomIndex = Int.random(in: 0..<musicScores.count)
-            let randomName = musicScores[randomIndex]
-            let score = MusicScore(name: "\(randomName) Score \(i)")
-            scores.append(score)
-        }
-        return scores
-    }
+    @State private var selectedScore: Collection?
     
     var body: some View {
-        List(randomScores) { score in
-            NavigationLink(score.name) {
-                PagesView()
-            }
-        }.toolbar{
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    Text("Add score")
-                } label: {
-                    Label("Add score", systemImage: "plus")
-                }
-            }
-        }
-            
-            .navigationBarTitle("Scores")
-        }
+//        List(moc.scores(in: selectedCollection), selection: $selectedScore) { score in
+//            NavigationLink(score.title, value: score)
+//        }
+//        .toolbar {
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//                Button {
+//                    showingAddCollectionScreen.toggle()
+//                } label: {
+//                    Label("Add Collection", systemImage: "plus")
+//                }
+//            }
+//        }.sheet(isPresented: $showingAddCollectionScreen) {
+//            AddCollectionView()
+//        }
+//        .navigationBarTitle("Scores")
+        Text("Scores")
+        
     }
     
-    struct ScoresView_Previews: PreviewProvider {
-        static var previews: some View {
-            ScoresView()
-        }
+    
+    
+}
+
+struct ScoresView_Previews: PreviewProvider {
+    static var previews: some View {
+        ScoresView()
     }
+}
