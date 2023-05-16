@@ -1,5 +1,6 @@
 import SwiftUI
 import VisionKit
+import CoreData
 
 struct DocumentScannerView: UIViewControllerRepresentable {
     @Binding var scannedDocuments: [UIImage]
@@ -72,7 +73,9 @@ struct ScannerView: View {
     @State private var scannedDocuments = [UIImage]()
     @State private var isSavePictures = false
     @State private var isPresentingScanner = false
-    var score: Score
+    var score: Score?
+    var moc: NSManagedObjectContext
+    var fileManager : LocalFileManager?
     @Environment(\.dismiss) var dismiss
     
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 5)
@@ -88,6 +91,7 @@ struct ScannerView: View {
             }
             
             if let documents = scannedDocuments {
+                
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
                         
@@ -106,7 +110,8 @@ struct ScannerView: View {
                 }
                 if documents.count > 0 && isSavePictures{
                     Button {
-                        savePictures(documents, score)
+                        savePictures(documents, score!, moc)
+                        dismiss()
                     } label: {
                         Label("Save pictures", systemImage: "square.and.arrow.down.fill")
                     }
@@ -135,20 +140,18 @@ struct ScannerView: View {
     }
 }
 
-func savePictures(_ pictures: [UIImage], _ score: Score) {
-    @Environment(\.managedObjectContext) var moc
-    @Environment(\.dismiss) var dismiss
+func savePictures(_ pictures: [UIImage], _ score: Score, _ moc: NSManagedObjectContext) {
+    
+    var fileManager = LocalFileManager.instance
 
     for p in pictures {
         let newPage = Page(context: moc)
         newPage.id = UUID()
-        newPage.image = saveImage(image: p, name: newPage.id!)?.absoluteString
+        fileManager.saveImage(image: p, imageName: newPage.id!.uuidString)
         newPage.isDone = false
-        // HERE FAILS
         newPage.score = score
         
         try? moc.save()
-        dismiss()
     }
 }
 

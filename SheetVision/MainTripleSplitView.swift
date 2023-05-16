@@ -18,6 +18,7 @@ struct MainTripleSplitView: View {
     @State private var isPresentingCameraFullScreen = false
     @State private var selectedCollection: Collection?
     @State private var selectedScore: Score?
+    private var fileManager = LocalFileManager.instance
     
     // pages view
     let names = ["Alice", "Bob", "Charlie", "David", "Emma", "Frank", "George", "Hannah", "Isabella", "Jack", "Kate", "Liam", "Mia", "Nathan", "Olivia", "Peter", "Quinn", "Rachel", "Sarah", "Tom", "Una", "Victoria", "William", "Xander", "Yara", "Zoe"]
@@ -93,7 +94,7 @@ struct MainTripleSplitView: View {
                         ForEach(pagesArray, id: \.self) { name in
                             NavigationLink(destination: PageDetailView()) {
                                 VStack {
-                                    Image(uiImage: loadImage(name.image!)!)
+                                    Image(uiImage: fileManager.loadImage(imageName:name.id!.uuidString)!)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         
@@ -118,7 +119,8 @@ struct MainTripleSplitView: View {
                 }
             }.fullScreenCover(isPresented: $isPresentingCameraFullScreen) {
                 
-                ScannerView(score: selectedScore!)
+                
+                ScannerView(score: selectedScore, moc: moc, fileManager: fileManager)
                 //AnotherCameraView()
                //CameraView(viewModel: ContentViewModel())
                 

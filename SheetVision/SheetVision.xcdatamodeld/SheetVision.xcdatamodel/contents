@@ -11,7 +11,6 @@
     </entity>
     <entity name="Page" representedClassName="Page" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="image" attributeType="String"/>
         <attribute name="isDone" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <relationship name="regions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Region" inverseName="page" inverseEntity="Region"/>
         <relationship name="score" maxCount="1" deletionRule="Nullify" destinationEntity="Score" inverseName="pages" inverseEntity="Score"/>
