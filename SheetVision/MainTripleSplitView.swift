@@ -18,23 +18,11 @@ struct MainTripleSplitView: View {
     @State private var isPresentingCameraFullScreen = false
     @State private var selectedCollection: Collection?
     @State private var selectedScore: Score?
+    @State private var path: [Page] = []
     private var fileManager = LocalFileManager.instance
     
-    // pages view
-    let names = ["Alice", "Bob", "Charlie", "David", "Emma", "Frank", "George", "Hannah", "Isabella", "Jack", "Kate", "Liam", "Mia", "Nathan", "Olivia", "Peter", "Quinn", "Rachel", "Sarah", "Tom", "Una", "Victoria", "William", "Xander", "Yara", "Zoe"]
     
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
-    
-    var randomNames: [String] {
-        var random = [String]()
-        for i in 1...20 {
-            let randomIndex = Int.random(in: 0..<names.count)
-            let name = names[randomIndex]
-            random.append("\(name) \(i)")
-        }
-        return random
-    }
-    
     
     var body: some View {
         NavigationSplitView {
@@ -84,49 +72,70 @@ struct MainTripleSplitView: View {
                 .navigationBarTitle("Scores")
             }
         } detail: {
-            //CameraView(viewModel: ContentViewModel())
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-
-                    if let pages = selectedScore?.pages as? Set<Page> ?? Set<Page>() {
-                        let pagesArray = Array(pages)
-
-                        ForEach(pagesArray, id: \.self) { name in
-                            NavigationLink(destination: PageDetailView()) {
-                                VStack {
-                                    Image(uiImage: fileManager.loadImage(imageName:name.id!.uuidString)!)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
+            NavigationStack(path: $path) {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        
+                        if let pages = selectedScore?.pages as? NSOrderedSet ?? NSOrderedSet() {
+                            
+                            let pagesArray = pages.array as? [Page] ?? []
+                            
+                            ForEach(pagesArray, id: \.self) { name in
+                                NavigationLink(value: name) {
+                                    VStack {
+                                        ZStack {
+                                            Image(uiImage: fileManager.loadImage(imageName: name.id!.uuidString)!)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .colorMultiply(name.isDone ? .clear : .gray)
+                                            
+                                            if !name.isDone {
+                                                VStack{
+                                                    Image(systemName: "exclamationmark.triangle.fill")
+                                                        .font(.system(size: 50))
+                                                        .foregroundColor(.yellow)
+                                                    Text("Not processed")
+                                                        .bold()
+                                                        .font(.caption)
+                                                        
+                                                }
+                                            }
+                                        }
                                         
-                                    Text("a")
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                }.padding()
+                                        Text((name.id?.uuidString.prefix(4))!)
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }.padding()
+                                }
                             }
                         }
                     }
                 }
-            }
-            .toolbar{
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Handle click event
-                        print("PUSHING CAMERA VIEW")
-                        isPresentingCameraFullScreen = true
-                    }) {
-                        Image(systemName: "camera")
+                .toolbar{
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            // Handle click event
+                            print("PUSHING CAMERA VIEW")
+                            isPresentingCameraFullScreen = true
+                        }) {
+                            Image(systemName: "camera")
+                        }
                     }
+                }.fullScreenCover(isPresented: $isPresentingCameraFullScreen) {
+                    
+                    
+                    ScannerView(score: selectedScore, moc: moc, fileManager: fileManager)
+                    //AnotherCameraView()
+                    //CameraView(viewModel: ContentViewModel())
+                    
                 }
-            }.fullScreenCover(isPresented: $isPresentingCameraFullScreen) {
-                
-                
-                ScannerView(score: selectedScore, moc: moc, fileManager: fileManager)
-                //AnotherCameraView()
-               //CameraView(viewModel: ContentViewModel())
-                
+                .navigationDestination(for: Page.self) {
+                    page in
+                    PageDetailView(page: page, fileManager: fileManager)
+                    
+                }
+                .navigationTitle("Pages")
             }
-            .navigationTitle("Pages")
-            
         }
     }
     

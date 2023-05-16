@@ -8,13 +8,31 @@
 import SwiftUI
 
 struct PageDetailView: View {
+    var page : Page
+    var fileManager: LocalFileManager?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/).navigationTitle("Page x")
-    }
-}
-
-struct PageDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        PageDetailView()
+        ScrollView {
+            VStack {
+                Image(uiImage: fileManager!.loadImage(imageName: page.id!.uuidString)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+                if page.isDone {
+                    ForEach(0..<3) { index in
+                        VStack {
+                            Image("crop\(index)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                            
+                            Text("Crop \(index + 1)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+            }
+            .padding()
+        }
     }
 }
