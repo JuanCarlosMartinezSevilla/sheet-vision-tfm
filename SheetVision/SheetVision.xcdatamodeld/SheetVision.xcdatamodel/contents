@@ -4,7 +4,7 @@
         <attribute name="colDescription" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="scores" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Score" inverseName="collection" inverseEntity="Score"/>
+        <relationship name="scores" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Score" inverseName="collection" inverseEntity="Score"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

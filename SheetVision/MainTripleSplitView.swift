@@ -46,8 +46,9 @@ struct MainTripleSplitView: View {
             }
             .navigationBarTitle("Collections")
         } content: {
-            if let scores = selectedCollection?.scores as? Set<Score> ?? Set<Score>() {
-                let scoresArray = Array(scores)
+            if let scores = selectedCollection?.scores as? NSOrderedSet ?? NSOrderedSet() {
+                
+                let scoresArray = scores.array as? [Score] ?? []
                 
                 List(scoresArray, id: \.self, selection: $selectedScore) { score in
                     

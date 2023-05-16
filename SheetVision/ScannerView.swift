@@ -150,8 +150,12 @@ func savePictures(_ pictures: [UIImage], _ score: Score, _ moc: NSManagedObjectC
         fileManager.saveImage(image: p, imageName: newPage.id!.uuidString)
         newPage.isDone = false
         newPage.score = score
-        
         try? moc.save()
+        
+        Task{
+            await processImage(image: p)
+            
+        }
     }
 }
 
