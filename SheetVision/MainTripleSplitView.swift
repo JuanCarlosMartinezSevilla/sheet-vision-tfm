@@ -15,8 +15,24 @@ struct MainTripleSplitView: View {
     
     @State private var showingAddCollectionScreen = false
     @State private var showingAddScoreScreen = false
+    @State private var isPresentingCameraFullScreen = false
     @State private var selectedCollection: Collection?
     @State private var selectedScore: Score?
+    
+    // pages view
+    let names = ["Alice", "Bob", "Charlie", "David", "Emma", "Frank", "George", "Hannah", "Isabella", "Jack", "Kate", "Liam", "Mia", "Nathan", "Olivia", "Peter", "Quinn", "Rachel", "Sarah", "Tom", "Una", "Victoria", "William", "Xander", "Yara", "Zoe"]
+    
+    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
+    
+    var randomNames: [String] {
+        var random = [String]()
+        for i in 1...20 {
+            let randomIndex = Int.random(in: 0..<names.count)
+            let name = names[randomIndex]
+            random.append("\(name) \(i)")
+        }
+        return random
+    }
     
     
     var body: some View {
@@ -67,9 +83,51 @@ struct MainTripleSplitView: View {
                 .navigationBarTitle("Scores")
             }
         } detail: {
-            PagesView()
+            //CameraView(viewModel: ContentViewModel())
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 16) {
+
+                    if let pages = selectedScore?.pages as? Set<Page> ?? Set<Page>() {
+                        let pagesArray = Array(pages)
+
+                        ForEach(pagesArray, id: \.self) { name in
+                            NavigationLink(destination: PageDetailView()) {
+                                VStack {
+                                    Image(uiImage: loadImage(name.image!)!)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        
+                                    Text("a")
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }.padding()
+                            }
+                        }
+                    }
+                }
+            }
+            .toolbar{
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        // Handle click event
+                        print("PUSHING CAMERA VIEW")
+                        isPresentingCameraFullScreen = true
+                    }) {
+                        Image(systemName: "camera")
+                    }
+                }
+            }.fullScreenCover(isPresented: $isPresentingCameraFullScreen) {
+                
+                ScannerView(score: selectedScore!)
+                //AnotherCameraView()
+               //CameraView(viewModel: ContentViewModel())
+                
+            }
+            .navigationTitle("Pages")
+            
         }
     }
+    
 }
 
 struct MainTripleSplitView_Previews: PreviewProvider {

@@ -9,7 +9,8 @@ import SwiftUI
 import CoreData
 
 class LoginManager : ObservableObject {
-    @Published var isLoggedIn = false
+    //@Published var isLoggedIn = false
+    @Published var isLoggedIn = true
     
     func login() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

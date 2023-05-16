@@ -15,6 +15,7 @@ struct SheetVisionApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .colorScheme(.light)
         }
     }
 }
