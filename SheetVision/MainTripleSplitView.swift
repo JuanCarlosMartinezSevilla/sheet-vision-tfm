@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct MainTripleSplitView: View {
     
     @Environment(\.managedObjectContext) var moc
@@ -20,7 +19,6 @@ struct MainTripleSplitView: View {
     @State private var selectedScore: Score?
     @State private var path: [Page] = []
     private var fileManager = LocalFileManager.instance
-    
     
     let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     
@@ -98,11 +96,9 @@ struct MainTripleSplitView: View {
                                                     Text("Not processed")
                                                         .bold()
                                                         .font(.caption)
-                                                        
                                                 }
                                             }
                                         }
-                                        
                                         Text((name.id?.uuidString.prefix(4))!)
                                             .font(.caption)
                                             .foregroundColor(.gray)
@@ -123,23 +119,16 @@ struct MainTripleSplitView: View {
                         }
                     }
                 }.fullScreenCover(isPresented: $isPresentingCameraFullScreen) {
-                    
-                    
                     ScannerView(score: selectedScore, moc: moc, fileManager: fileManager)
-                    //AnotherCameraView()
-                    //CameraView(viewModel: ContentViewModel())
-                    
                 }
                 .navigationDestination(for: Page.self) {
                     page in
                     PageDetailView(page: page, fileManager: fileManager)
-                    
                 }
                 .navigationTitle("Pages")
             }
         }
     }
-    
 }
 
 struct MainTripleSplitView_Previews: PreviewProvider {

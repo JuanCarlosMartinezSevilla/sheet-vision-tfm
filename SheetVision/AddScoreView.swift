@@ -24,7 +24,6 @@ struct AddScoreView: View {
 
                 Section {
                     TextField("Author", text: $author)
-                    
                 }
 
                 Section {

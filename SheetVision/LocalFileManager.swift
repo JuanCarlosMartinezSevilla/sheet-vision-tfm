@@ -1,5 +1,5 @@
 //
-//  ImageUtils.swift
+//  LocalFileManager.swift
 //  SheetVision
 //
 //  Created by Juan Carlos Martínez Sevilla on 16/5/23.
@@ -20,7 +20,6 @@ class LocalFileManager {
         guard let data = image.pngData(),
         let url = getURLForImage(imageName: imageName, folderName: folderName)
         else {return}
-        
         
         do {
             try data.write(to: url)
@@ -62,7 +61,6 @@ class LocalFileManager {
         guard let folderURL = getURLForFolder(folderName: folderName) else {
             return nil
         }
-        
         return folderURL.appendingPathComponent(imageName + ".png")
     }
 }

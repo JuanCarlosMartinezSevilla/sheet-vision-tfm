@@ -23,7 +23,6 @@ struct AddCollectionView: View {
 
                 Section {
                     TextField("Description", text: $colDescription)
-                    
                 }
 
                 Section {
