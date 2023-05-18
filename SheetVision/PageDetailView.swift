@@ -17,7 +17,7 @@ struct PageDetailView: View {
                 Image(uiImage: fileManager!.loadImage(imageName: page.id!.uuidString)!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                
+                Text((page.score?.name)!)
             }
             .padding()
         }

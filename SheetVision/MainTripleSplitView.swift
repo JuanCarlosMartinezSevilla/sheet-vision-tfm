@@ -86,7 +86,7 @@ struct MainTripleSplitView: View {
                                             Image(uiImage: fileManager.loadImage(imageName: name.id!.uuidString)!)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .colorMultiply(name.isDone ? .clear : .gray)
+                                                
                                             
                                             if !name.isDone {
                                                 VStack{
@@ -95,7 +95,8 @@ struct MainTripleSplitView: View {
                                                         .foregroundColor(.yellow)
                                                     Text("Not processed")
                                                         .bold()
-                                                        .font(.caption)
+                                                        .font(.headline)
+                                                        .foregroundColor(.red)
                                                 }
                                             }
                                         }
