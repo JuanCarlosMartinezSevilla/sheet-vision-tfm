@@ -78,6 +78,9 @@ func fetchData(_ image: UIImage, _ moc: NSManagedObjectContext, _ page: Page) {
                     
                     try? moc.save()
                 }
+                DispatchQueue.main.async {
+                    sendNotification()
+                }
             }
             
             catch let decodingError {
@@ -85,7 +88,10 @@ func fetchData(_ image: UIImage, _ moc: NSManagedObjectContext, _ page: Page) {
             }
         }
     }.resume()
+    
 }
+
+
 
 struct CustomRegion: Hashable, Codable {
     let fromX : Int

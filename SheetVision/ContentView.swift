@@ -29,6 +29,15 @@ struct ContentView : View {
             MainTripleSplitView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .transition(.move(edge: .leading))
+                .onAppear{
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                        if success {
+                            print("All set!")
+                        } else if let error = error {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
         } else {
             LoginView(loginManager: loginManager)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
