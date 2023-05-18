@@ -104,7 +104,7 @@ struct MainTripleSplitView: View {
                                             .font(.caption)
                                             .foregroundColor(.gray)
                                     }.padding()
-                                }
+                                }.disabled(!name.isDone)
                             }
                         }
                     }

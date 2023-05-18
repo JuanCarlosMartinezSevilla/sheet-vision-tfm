@@ -12,7 +12,7 @@
     <entity name="Page" representedClassName="Page" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isDone" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <relationship name="regions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Region" inverseName="page" inverseEntity="Region"/>
+        <relationship name="regions" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Region" inverseName="page" inverseEntity="Region"/>
         <relationship name="score" maxCount="1" deletionRule="Nullify" destinationEntity="Score" inverseName="pages" inverseEntity="Score"/>
     </entity>
     <entity name="Region" representedClassName="Region" syncable="YES" codeGenerationType="class">
@@ -21,7 +21,7 @@
         <attribute name="sequence" optional="YES" attributeType="String"/>
         <attribute name="toX" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="toY" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="page" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="regions" inverseEntity="Page"/>
+        <relationship name="page" maxCount="1" deletionRule="Nullify" destinationEntity="Page" inverseName="regions" inverseEntity="Page"/>
     </entity>
     <entity name="Score" representedClassName="Score" syncable="YES" codeGenerationType="class">
         <attribute name="author" optional="YES" attributeType="String"/>
