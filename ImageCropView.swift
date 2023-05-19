@@ -50,6 +50,7 @@ struct WordGridView: View {
                     ForEach(0..<columns) { column in
                         let index = row * columns + column
                         if index < words.count {
+                            // textfield
                             Text("\(index + 1): \(words[index])")
                                 .padding(8)
                                 .border(Color.gray)
