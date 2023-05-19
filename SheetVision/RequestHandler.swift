@@ -78,9 +78,9 @@ func fetchData(_ image: UIImage, _ moc: NSManagedObjectContext, _ page: Page) {
                     
                     try? moc.save()
                 }
-                DispatchQueue.main.async {
-                    sendNotification()
-                }
+//                DispatchQueue.main.async {
+//                    sendNotification()
+//                }
             }
             
             catch let decodingError {
